@@ -78,7 +78,7 @@ app.use(express.urlencoded({
 app.get('/', (request, response) => {
   response.render('main', {
     title: 'LinkedIn REST API',
-    subtitle: 'API Reference'
+    subtitle: 'Docs'
   });
 });
 
