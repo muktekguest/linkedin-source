@@ -21,6 +21,7 @@ const app = Router();
  * [1] Companies
  */
 const Companies = require('../controllers/Companies');
+const User = require('../controllers/User');
 
 /**
  * Endpoints
@@ -38,5 +39,9 @@ app.route('/companies')
   .delete(Companies.remove);
 
 app.get('/companies/:companyId', Companies.getById);
+
+app.post('/auth/signup', User.create);
+app.post('/auth/login', User.login);
+app.get('/users', User.index);
 
 module.exports = app;
