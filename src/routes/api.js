@@ -23,6 +23,8 @@ const app = Router();
 const Companies = require('../controllers/Companies');
 const User = require('../controllers/User');
 
+const isAuthenticated = require('../services/Auth');
+
 /**
  * Endpoints
  *
@@ -33,8 +35,8 @@ const User = require('../controllers/User');
  *     `delete(/companies)`
  */
 app.route('/companies')
-  .get(Companies.index)
-  .post(Companies.create)
+  .get(isAuthenticated, Companies.index)
+  .post(isAuthenticated, Companies.create)
   .put(Companies.update)
   .delete(Companies.remove);
 
