@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
@@ -33,32 +33,30 @@ const Controller = {
       .exec()
       .then(users => {
         if (users.length < 1) {
-          // save new user
-          bcrypt.hash(request.body.password, 10, (error, hash) => {
-            if (error) {
-              return response
+          const hash = bcrypt.hashSync(request.body.password);
+
+          const newUser = new User({
+            _id: mongoose.Types.ObjectId(),
+            email: request.body.email,
+            password: hash
+          });
+
+          newUser
+            .save()
+            .then(saved => {
+              response
+                .status(201)
+                .json({
+                  message: 'User created successfully.'
+                });
+            })
+            .catch(error => {
+              response
                 .status(500)
                 .json({
-                  message: error
-                });
-            }
-
-            const newUser = new User({
-              _id: mongoose.Types.ObjectId(),
-              email: request.body.email,
-              password: hash
+                  error
+                })
             });
-
-            newUser
-              .save()
-              .then(saved => {
-                response
-                  .status(201)
-                  .json({
-                    message: 'User created successfully.'
-                  });
-              });
-          });
         } else {
           response
             .status(422)
