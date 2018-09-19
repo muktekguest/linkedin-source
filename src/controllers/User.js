@@ -67,6 +67,7 @@ const Controller = {
             });
         }
       })
+      .catch(error => console.log(error));
   },
   remove: (request, response) => {
     User

@@ -35,7 +35,7 @@ const isAuthenticated = require('../services/Auth');
  *     `delete(/companies)`
  */
 app.route('/companies')
-  .get(isAuthenticated, Companies.index)
+  .get(Companies.index)
   .post(isAuthenticated, Companies.create)
   .put(Companies.update)
   .delete(Companies.remove);
